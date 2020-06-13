@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="BusinessRules\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\Handlers\" />
+    <Folder Include="Services\Commands\" />
+    <Folder Include="Services\Queries\" />
+  </ItemGroup>
+
+</Project>

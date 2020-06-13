@@ -1,0 +1,31 @@
+﻿@page "/claims"
+
+@inject Application.Core.Interfaces.Services.IApiService ApiService
+
+<AuthorizeView>
+    <Authorized>
+        <h2> Hello @context.User.Identity.Name, here is the list of your claims:</h2>
+
+        <ul>
+            @foreach (var claim in context.User.Claims)
+            {
+                <li><b>@claim.Type</b>: @claim.Value</li>
+            }
+        </ul>
+        <p>@identity</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>I'm sorry, I cant't display anything until you log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+
+@code {
+    private string identity;
+
+    protected override async Task OnInitializedAsync()
+    {
+        identity = await ApiService.GetIdentityAsync();
+    }
+}
