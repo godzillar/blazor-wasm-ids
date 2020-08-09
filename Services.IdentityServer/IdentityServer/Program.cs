@@ -3,11 +3,14 @@
 
 
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using IdentityServer.Data;
 
 namespace IdentityServer
 {
@@ -34,8 +37,13 @@ namespace IdentityServer
 
             try
             {
+                var host = CreateHostBuilder(args).Build();
+                var config = host.Services.GetRequiredService<IConfiguration>();
+                var connectionString = config.GetConnectionString("IDSDb");
+                SeedData.EnsureSeedData(connectionString);
+
                 Log.Information("Starting host...");
-                CreateHostBuilder(args).Build().Run();
+                host.Run();
                 return 0;
             }
             catch (Exception ex)
